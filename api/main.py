@@ -7,55 +7,79 @@ from api.logger import logger
 
 app = FastAPI(title="Fraud Detection API")
 
-# Load trained model
+# Load trained model and scaler
 try:
     model = joblib.load("models/isolation_forest.pkl")
+    scaler = joblib.load("models/scaler.pkl")
 except Exception as e:
-    raise RuntimeError("Model could not be loaded") from e
+    raise RuntimeError("Model or scaler could not be loaded") from e
 
 
 @app.post("/predict")
 def predict_fraud(txn: TransactionInput):
     try:
-        # Convert input to model format
+        
+        
+      
+        log_amount = np.log1p(txn.amount)
+        is_night = 1 if txn.hour < 6 or txn.hour > 22 else 0
+        is_weekend = 1 if txn.day_of_week >= 5 else 0
+        distance = txn.distance_from_home
+        amount_distance_ratio = txn.amount / (txn.distance_from_home + 1)
+
         features = np.array([[
-            txn.amount,
-            txn.hour,
-            txn.day_of_week,
-            txn.month,
-            txn.distance_from_home
+            log_amount,
+            is_night,
+            is_weekend,
+            distance,
+            amount_distance_ratio
         ]])
 
-        # Model prediction
-        prediction = model.predict(features)[0]
+        # Scale features
+        features_scaled = scaler.transform(features)
 
-        # Anomaly score
-        raw_score = -model.decision_function(features)[0]
+                # Model prediction
+       
+        
+        raw_score = -model.decision_function(features_scaled)[0]
 
-        # Normalize to 0–1 range (sigmoid)
+        # Normalize to probability-like score
         fraud_probability = 1 / (1 + np.exp(-raw_score))
 
-        # Final decision
-        decision = "fraud" if prediction == -1 else "legitimate"
+        THRESHOLD = 0.6
+        decision = "fraud" if fraud_probability >= THRESHOLD else "legitimate"
 
-        # Reasoning logic
+
+        
+        # Reasoning (Explainability)
+       
         reasons = []
         if txn.amount > 100000:
             reasons.append("high transaction amount")
         if txn.distance_from_home > 100:
             reasons.append("large distance from home")
-        if txn.hour < 6 or txn.hour > 22:
+        if is_night:
             reasons.append("unusual transaction time")
+        if is_weekend:
+            reasons.append("weekend transaction")
 
-        reasoning = ", ".join(reasons) if reasons else "normal transaction behavior"
+        if decision == "legitimate":
+            reasoning = "normal transaction behavior"
+        else:
+            reasoning = ", ".join(reasons) if reasons else "anomalous pattern detected"
 
+
+        
         # Logging
+        
         logger.info(
             f"amount={txn.amount}, distance={txn.distance_from_home}, "
             f"raw_score={raw_score:.4f}, decision={decision}"
         )
 
-        # API response
+        
+        # API Response
+        
         return {
             "fraud_probability": round(fraud_probability, 4),
             "decision": decision,

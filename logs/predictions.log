@@ -1,0 +1,23 @@
+2026-01-11 23:00:56,325 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:00:56,325 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:01:15,428 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:03:14,081 | INFO | amount=120000.0, distance=350.0, score=0.0910, decision=fraud
+2026-01-11 23:19:57,904 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:19:57,904 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:20:04,956 | INFO | NumExpr defaulting to 12 threads.
+2026-01-11 23:21:33,528 | INFO | amount=50000.0, distance=5.0, score=0.1014, decision=fraud
+2026-01-11 23:21:51,091 | INFO | amount=50000.0, distance=5.0, score=0.1057, decision=fraud
+2026-01-11 23:22:16,243 | INFO | amount=50000.0, distance=5.0, score=0.1047, decision=fraud
+2026-01-11 23:23:13,668 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-11 23:23:17,775 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:43:12,479 | INFO | NumExpr defaulting to 12 threads.
+2026-01-12 00:43:32,011 | INFO | amount=1.0, distance=0.0, score=0.0006, decision=fraud
+2026-01-12 00:44:15,329 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:53:56,688 | INFO | NumExpr defaulting to 12 threads.
+2026-01-12 00:54:41,091 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:54:54,569 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:54:54,719 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:54:54,879 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:54:55,097 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
+2026-01-12 00:59:22,818 | INFO | NumExpr defaulting to 12 threads.
+2026-01-12 01:01:08,886 | INFO | amount=1200.0, distance=5.0, score=0.0717, decision=fraud
